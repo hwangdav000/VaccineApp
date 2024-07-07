@@ -11,13 +11,11 @@ const hospitalVaccineSchema = new schemaObj(
       ref: 'Hospital',
       required: true,
     },
-    hospitalName: String,
     vaccineId: {
       type: mongooseObj.Schema.Types.ObjectId,
       ref: 'Vaccine',
       required: true,
     },
-    vaccineName: String,
     price: Number,
     dosesRequired: {
       type: Number,

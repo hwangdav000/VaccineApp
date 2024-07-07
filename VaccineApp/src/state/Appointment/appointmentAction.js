@@ -169,3 +169,61 @@ export const CompleteAppointmentToDB = (appointmentId, accessToken) => {
       });
   };
 };
+
+export const CreatePDFCertificateToDB = (certificateDetails, accessToken) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  return (dispatch) => {
+    axios
+      .post(
+        `http://localhost:9000/appointment/api/appointments/generateCertificate`,
+        { certificateDetails },
+        config
+      )
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log('error while saving', err);
+      });
+  };
+};
+
+export const GetCertificateFromDB = (id, accessToken) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    responseType: 'blob', // Set the response type to blob
+  };
+
+  return (dispatch) => {
+    const path = `http://localhost:9000/appointment/api/appointments/certificate/${id}`;
+
+    axios
+      .get(path, config)
+      .then((response) => {
+        // Create a link element, set its href to the blob URL, and click it to start the download
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `certificate_${id}.pdf`); // Set the download attribute
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up the URL object
+        window.URL.revokeObjectURL(url);
+        link.remove();
+      })
+      .catch((error) => {
+        console.error(
+          'Error fetching certificate:',
+          error.response ? error.response.data : error.message
+        );
+      });
+  };
+};

@@ -16,12 +16,6 @@ let userSchema = new schemaObj(
     gender: String,
     disease: String,
     profession: String,
-    pdfCertificates: [
-      {
-        data: Buffer,
-        contentType: String,
-      },
-    ],
   },
   {
     versionKey: false, // false - set to false then it won't create in MongoDB

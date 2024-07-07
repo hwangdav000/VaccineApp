@@ -28,6 +28,10 @@ let appointmentSchema = new schemaObj(
       type: String,
       default: 'NOT COMPLETED',
     },
+    certificate: {
+      type: Buffer,
+      required: false,
+    },
   },
   {
     versionKey: false,
