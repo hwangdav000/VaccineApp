@@ -6,6 +6,8 @@ import { GetHospitalsFromDB } from '../../../state/Hospital/hospitalAction';
 import { GetVaccinesFromDB } from '../../../state/Vaccine/vaccineAction';
 import { GetAllHospitalVaccinesFromDB } from '../../../state/HospitalVaccine/hospitalVaccineAction';
 import { GetUsersFromDB } from '../../../state/User/userAction';
+import { GetAllAppointmentsFromDB } from '../../../state/Appointment/appointmentAction';
+
 import {
   Chart,
   ArcElement,
@@ -35,12 +37,18 @@ const Report = () => {
   const hospitalVaccineList = useSelector(
     (store) => store.hospitalVaccineReducer.hospitalVaccinesList
   );
+  const appointmentsList = useSelector(
+    (store) => store.appointmentReducer.appointmentsList
+  );
 
   const [ageBarChart, setAgeBarChart] = useState({});
   const [genderPieChart, setGenderPieChart] = useState({});
   const [diseasePieChart, setDiseasePieChart] = useState({});
   const [professionPieChart, setProfessionPieChart] = useState({});
-  const [loading, setLoading] = useState(true); // State to track loading state
+  const [vaccinationPieChart, setVaccinationPieChart] = useState({});
+  const [vaccinationCountBarChart, setVaccinationCountBarChart] = useState({});
+
+  const [loading, setLoading] = useState(true); // wait for values to be initialized
   const dispatchToDB = useDispatch();
 
   useEffect(() => {
@@ -48,6 +56,7 @@ const Report = () => {
     dispatchToDB(GetVaccinesFromDB(accessToken));
     dispatchToDB(GetAllHospitalVaccinesFromDB(accessToken));
     dispatchToDB(GetUsersFromDB(accessToken));
+    dispatchToDB(GetAllAppointmentsFromDB(accessToken));
   }, [dispatchToDB, accessToken]);
 
   useEffect(() => {
@@ -56,6 +65,7 @@ const Report = () => {
       const genderData = {};
       const diseaseData = {};
       const professionData = {};
+      const vaccinatedData = {};
 
       const filteredUserList = userList.filter(
         (user) => user.userName !== 'ADMIN'
@@ -88,6 +98,13 @@ const Report = () => {
           professionData[user.profession]++;
         } else {
           professionData[user.profession] = 1;
+        }
+
+        // vaccinated data
+        if (vaccinatedData[user.vaccinated]) {
+          vaccinatedData[user.vaccinated]++;
+        } else {
+          vaccinatedData[user.vaccinated] = 1;
         }
       });
 
@@ -167,9 +184,75 @@ const Report = () => {
         ],
       });
 
+      setVaccinationPieChart({
+        labels: Object.keys(vaccinatedData),
+        datasets: [
+          {
+            label: 'Vaccination Distribution',
+            data: Object.values(vaccinatedData),
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+            borderWidth: 1,
+          },
+        ],
+      });
+
+      // set appointments before the current date
+      // Filter appointments before the current date
+      // Generate past 7 days dates
+      const today = new Date();
+      const past7Days = [];
+      const vaccinatedCountData = {};
+
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i);
+        past7Days.push(date.toISOString().split('T')[0]);
+        vaccinatedCountData[date.toISOString().split('T')[0]] = 0;
+      }
+      console.log('looking at appointments list');
+      appointmentsList.forEach((appointment) => {
+        const aDate = appointment.appointmentDate.split('T')[0];
+        console.log('Date ', aDate);
+        // Check if aDate is in past7Days array
+        if (
+          past7Days.includes(aDate) &&
+          appointment.completeStatus == 'COMPLETED'
+        ) {
+          // Increment count or update data as needed
+          if (vaccinatedCountData[aDate]) {
+            vaccinatedCountData[aDate]++;
+          } else {
+            vaccinatedCountData[aDate] = 1;
+          }
+        }
+      });
+
+      setVaccinationCountBarChart({
+        labels: Object.keys(vaccinatedCountData).reverse(),
+        datasets: [
+          {
+            label: 'Vaccination Count Distribution',
+            data: Object.values(vaccinatedCountData).reverse(),
+            backgroundColor: 'rgba(75, 192, 192, 0.4)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+          },
+        ],
+      });
+
       setLoading(false); // Set loading state to false once data is populated
     }
-  }, [userList, vaccinesList, hospitalList, hospitalVaccineList]);
+  }, [
+    userList,
+    vaccinesList,
+    hospitalList,
+    hospitalVaccineList,
+    appointmentsList,
+  ]);
 
   if (loading) {
     return <p>Loading...</p>; // Optionally show a loading indicator
@@ -250,6 +333,44 @@ const Report = () => {
           <Carousel.Caption>
             <h5>Profession Pie Chart</h5>
             <p>Distribution of Profession amongst Users</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+
+        <Carousel.Item>
+          <div
+            style={{
+              height: '500px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: '100px',
+              marginBottom: '150px',
+            }}
+          >
+            <Pie data={vaccinationPieChart} />
+          </div>
+          <Carousel.Caption>
+            <h5>Vaccinated Pie Chart</h5>
+            <p>Distribution of Vaccinated Users</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+
+        <Carousel.Item>
+          <div
+            style={{
+              height: '500px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: '100px',
+              marginBottom: '150px',
+            }}
+          >
+            <Bar data={vaccinationCountBarChart} />
+          </div>
+          <Carousel.Caption>
+            <h5>Vaccination Count Chart</h5>
+            <p>Statistics of last 7 days</p>
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
