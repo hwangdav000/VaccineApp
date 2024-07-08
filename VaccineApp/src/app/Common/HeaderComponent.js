@@ -38,7 +38,7 @@ let Header = (props) => {
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li>
                 <NavLink
-                  to="/user"
+                  to="/home"
                   className="nav-link px-2 text-secondary"
                 >
                   Home
@@ -102,10 +102,10 @@ let Header = (props) => {
               </li>
               <li>
                 <NavLink
-                  to="#"
+                  to="/report"
                   className="nav-link px-2 text-white"
                 >
-                  About
+                  Report
                 </NavLink>
               </li>
             </ul>

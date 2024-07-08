@@ -5,6 +5,7 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
+import './app.css';
 
 import Home from './Common/HomeComponent';
 import Footer from './Common/FooterComponent';
@@ -18,6 +19,8 @@ import VaccineManagement from './Application/HospitalVaccine/HospitalVaccineComp
 import MakeAppointment from './Application/Appointment/MakeAppointmentComponent';
 import ApproveAppointment from './Application/AppointmentView/ApproveAppointmentComponent';
 import UserAppointments from './Application/AppointmentView/UserAppointmentsComponent';
+import Report from './Application/Report/ReportComponent';
+
 export default class ApplicationComponent extends Component {
   constructor(props) {
     super(props);
@@ -66,6 +69,10 @@ export default class ApplicationComponent extends Component {
               <Route
                 path="userAppointment"
                 element={<UserAppointments />}
+              />
+              <Route
+                path="report"
+                element={<Report />}
               />
             </Routes>
             <Footer />

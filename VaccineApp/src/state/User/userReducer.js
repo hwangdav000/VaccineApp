@@ -8,6 +8,7 @@ let initialState = {
     address: 'street',
     mobile: 111,
   },
+  userList: [],
 };
 
 let userReducer = (state = initialState, action) => {
@@ -15,6 +16,9 @@ let userReducer = (state = initialState, action) => {
     // signup
     case actionTypes.ADD_USER_TO_STORE:
       return { ...state, user: action.payload };
+
+    case actionTypes.ADD_USERS_TO_STORE:
+      return { ...state, userList: action.payload };
 
     default:
       return state;

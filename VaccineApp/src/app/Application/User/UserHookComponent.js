@@ -14,11 +14,13 @@ const UserHook = () => {
 
   let [uName, setUserName] = useState('');
   let [pass, setPassword] = useState('');
+  let [fullName, setFullName] = useState('');
   let [address, setAddress] = useState('');
+  let [mobile, setPhone] = useState('');
+  let [age, setAge] = useState('');
   let [gender, setGender] = useState('');
   let [disease, setDisease] = useState('');
   let [profession, setProfession] = useState('');
-  let [mobile, setPhone] = useState('');
 
   let sessionName = useRef(null);
   let sessionPassword = useRef(null);
@@ -36,6 +38,8 @@ const UserHook = () => {
       userName: uName,
       password: pass,
       address,
+      fullName,
+      age,
       mobile,
       gender,
       disease,
@@ -121,6 +125,26 @@ const UserHook = () => {
               column
               sm={2}
             >
+              <b>Full Name:</b>
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Control
+                type="text"
+                value={fullName}
+                placeholder="Full Name"
+                onChange={(evt) => setFullName(evt.target.value)}
+              />
+            </Col>
+          </Form.Group>
+
+          <Form.Group
+            as={Row}
+            className="mb-3"
+          >
+            <Form.Label
+              column
+              sm={2}
+            >
               <b>Address:</b>
             </Form.Label>
             <Col sm={10}>
@@ -129,6 +153,26 @@ const UserHook = () => {
                 value={address}
                 placeholder="Address"
                 onChange={(evt) => setAddress(evt.target.value)}
+              />
+            </Col>
+          </Form.Group>
+
+          <Form.Group
+            as={Row}
+            className="mb-3"
+          >
+            <Form.Label
+              column
+              sm={2}
+            >
+              <b>Age:</b>
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Control
+                type="number"
+                value={age}
+                placeholder="Age"
+                onChange={(evt) => setAge(evt.target.value)}
               />
             </Col>
           </Form.Group>

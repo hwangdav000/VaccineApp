@@ -1,4 +1,5 @@
 export const ADD_USER_TO_STORE = 'STORE.ADDUSER';
+export const ADD_USERS_TO_STORE = 'STORE.ADDUSERS';
 export const LOGIN_USER = 'STORE.LOGIN';
 
 export const ADD_TOKEN_TO_STORE = 'STORE.ADDTOKENS';

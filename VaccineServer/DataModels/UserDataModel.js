@@ -7,15 +7,14 @@ let userSchema = new schemaObj(
   {
     userName: { type: String, required: true },
     password: { type: String, required: true },
+    fullName: String,
     address: String,
     mobile: Number,
-    age: {
-      type: Number,
-      min: 1,
-    },
+    age: Number,
     gender: String,
     disease: String,
     profession: String,
+    vaccinated: { type: Boolean, default: false },
   },
   {
     versionKey: false, // false - set to false then it won't create in MongoDB

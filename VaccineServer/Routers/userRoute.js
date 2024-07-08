@@ -1,6 +1,7 @@
 let express = require('express');
 let userRouter = express.Router({}); //
-let UserDataModel = require('../DataModels/UserDataModel'); //
+let UserDataModel = require('../DataModels/UserDataModel');
+const { authenticateToken } = require('../Authentication/authenticate');
 const {
   generateTokens,
   generateAccessFromRefreshToken,
@@ -82,4 +83,15 @@ userRouter.get('/api/getUser/:userId', (req, res) => {
       res.send('error while searching user id');
     });
 });
+
+userRouter.get('/api/getAllUsers', authenticateToken, (req, res) => {
+  UserDataModel.find()
+    .then((users) => {
+      res.send(users);
+    })
+    .catch(() => {
+      res.send('error while fetching users');
+    });
+});
+
 module.exports = userRouter;

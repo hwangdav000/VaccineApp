@@ -9,6 +9,13 @@ export const AddUserToStore = (user) => {
   };
 };
 
+export const AddUsersToStore = (users) => {
+  return {
+    type: actionTypes.ADD_USERS_TO_STORE,
+    payload: users,
+  };
+};
+
 export const LoginUserDB = (user) => {
   return (dispatch) => {
     axios
@@ -68,6 +75,26 @@ export const SaveUserToDBUsingFetch = (newUser) => {
       .catch((err) => {
         console.log('error while logging in ', err);
         return false;
+      });
+  };
+};
+
+export const GetUsersFromDB = (accessToken) => {
+  return (dispatch) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    axios
+      .get('http://localhost:9000/user/api/getAllUsers', config)
+      .then((response) => {
+        const users = response.data;
+        dispatch(AddUsersToStore(users));
+      })
+      .catch((error) => {
+        console.error('Error fetching users:', error);
       });
   };
 };
