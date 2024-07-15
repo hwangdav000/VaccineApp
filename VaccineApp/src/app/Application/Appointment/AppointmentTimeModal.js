@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import TimePicker from 'react-time-picker';
-import 'react-datepicker/dist/react-datepicker.css';
-import 'react-time-picker/dist/TimePicker.css';
 import { SaveAppointmentToDB } from '../../../state/Appointment/appointmentAction';
 import AppointmentCheckoutModal from './AppointmentCheckoutModal';
+import 'react-datepicker/dist/react-datepicker.css';
+import 'react-time-picker/dist/TimePicker.css';
 
 const AppointmentTimeModal = ({
   show,
@@ -62,42 +62,75 @@ const AppointmentTimeModal = ({
     };
     setAppointmentDetail(appointmentDetail);
     setShowCheckoutModal(true);
-    // Handle form submission logic here, such as dispatching an action or calling an API
-    // dispatchToDB(SaveAppointmentToDB(appointmentDetails, accessToken));
-    // alert('Appointment submitted successfully!');
-    //handleClose();
   };
 
   return (
     <Modal
       show={show}
       onHide={handleClose}
+      centered
     >
       <Modal.Header closeButton>
         <Modal.Title>Purchase Vaccination</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group controlId="formAppointmentDate">
-            <Form.Label>Select Appointment Date</Form.Label>
-            <DatePicker
-              selected={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
-              dateFormat="MMMM d, yyyy"
-              className="form-control"
-            />
+          <Form.Group
+            as={Row}
+            controlId="formAppointmentDate"
+          >
+            <Form.Label
+              column
+              sm="4"
+              className="font-weight-bold"
+            >
+              Set Date
+            </Form.Label>
+            <Col sm="4">
+              <DatePicker
+                selected={selectedDate}
+                onChange={(date) => setSelectedDate(date)}
+                dateFormat="MMMM d, yyyy"
+                className="form-control"
+                popperPlacement="bottom-end"
+                popperModifiers={{
+                  offset: {
+                    enabled: true,
+                    offset: '0, 8px',
+                  },
+                  preventOverflow: {
+                    enabled: true,
+                    escapeWithReference: false,
+                    boundariesElement: 'viewport',
+                  },
+                }}
+              />
+            </Col>
           </Form.Group>
-          <Form.Group controlId="formAppointmentTime">
-            <Form.Label>Select Appointment Time</Form.Label>
-            <TimePicker
-              value={selectedTime}
-              onChange={(time) => setSelectedTime(time)}
-              format="hh:mm a"
-              hourPlaceholder="hh"
-              minutePlaceholder="mm"
-              clearIcon={null}
-              className="form-control"
-            />
+          <Form.Group
+            as={Row}
+            controlId="formAppointmentTime"
+            className="mt-3"
+          >
+            <Form.Label
+              column
+              sm="4"
+              className="font-weight-bold"
+            >
+              Set Time
+            </Form.Label>
+            <Col sm="4">
+              <TimePicker
+                value={selectedTime}
+                onChange={setSelectedTime}
+                format="hh:mm a"
+                hourPlaceholder="hh"
+                minutePlaceholder="mm"
+                disableClock={true}
+                clearIcon={null}
+                className="form-control"
+              />
+            </Col>
           </Form.Group>
         </Form>
       </Modal.Body>
@@ -108,9 +141,12 @@ const AppointmentTimeModal = ({
         >
           Close
         </Button>
-        <div className="primary">
-          <Button onClick={handleSubmit}>Checkout Vaccination</Button>
-        </div>
+        <Button
+          variant="primary"
+          onClick={handleSubmit}
+        >
+          Checkout Vaccination
+        </Button>
 
         {showCheckoutModal && (
           <AppointmentCheckoutModal

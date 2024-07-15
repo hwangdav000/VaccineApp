@@ -6,7 +6,6 @@ import Footer from './Common/FooterComponent';
 import Header from './Common/HeaderComponent';
 import NotFound from './Common/NotFoundComponent';
 
-import UserHook from './Application/User/UserHookComponent';
 import Login from './Application/User/LoginComponent';
 import Registration from './Application/User/RegistrationComponent';
 
@@ -39,10 +38,7 @@ export default class ApplicationComponent extends Component {
                 path="/home"
                 element={<Home />}
               />
-              <Route
-                path="/user"
-                element={<UserHook />}
-              />
+
               <Route
                 path="/login"
                 element={<Login />}

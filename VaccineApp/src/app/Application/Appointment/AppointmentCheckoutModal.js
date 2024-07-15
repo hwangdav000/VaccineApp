@@ -57,6 +57,8 @@ const AppointmentCheckoutModal = ({
     <Modal
       show={show}
       onHide={handleClose}
+      centered
+      size="lg"
     >
       <Modal.Header closeButton>
         <Modal.Title>Purchase Vaccination</Modal.Title>
@@ -95,12 +97,11 @@ const AppointmentCheckoutModal = ({
                   className="mt-3 w-100 btn"
                   onClick={handleGenerateQR}
                 >
-                  Generate QR Payment
+                  Generate QR
                 </Button>
               )}
               {showQR && (
                 <div className="text-center mt-3">
-                  Scan QR for Payment
                   <QRCode value={qrValue} />
                 </div>
               )}
@@ -120,7 +121,7 @@ const AppointmentCheckoutModal = ({
           variant="primary"
           onClick={handleCheckout}
         >
-          Payment Submitted
+          Submit Payment
         </Button>
       </Modal.Footer>
     </Modal>

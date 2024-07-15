@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { GetAppointmentsFromDB } from '../../../state/Appointment/appointmentAction';
-import { Table, Container, Spinner } from 'react-bootstrap'; // Import Spinner for loading indicator
+import { Table, Container } from 'react-bootstrap';
 import AppointmentUserViewItem from './AppointmentUserViewItemComponent';
 import { GetAllHospitalVaccinesFromDB } from '../../../state/HospitalVaccine/hospitalVaccineAction';
 import { GetHospitalsFromDB } from '../../../state/Hospital/hospitalAction';
@@ -41,7 +41,7 @@ const UserAppointments = () => {
     );
   }
   const backgroundImg =
-    'https://images.unsplash.com/photo-1670502394307-fd0781f280e5?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+    'https://images.unsplash.com/photo-1494516192674-b82b5f1e61dc?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
   return (
     <div
@@ -56,9 +56,9 @@ const UserAppointments = () => {
       }}
       className="main-content"
     >
-      <Container className="d-flex justify-content-center align-items-center min-vh-100">
+      <Container className="d-flex justify-content-center align-items-start min-vh-100 mt-5">
         <div className="p-4 user-appointment-container">
-          <h1 className="text-center mb-5">My Appointments</h1>
+          <h1 className="text-center mb-3">My Appointments</h1>
           <Table
             striped
             bordered
@@ -66,13 +66,13 @@ const UserAppointments = () => {
             responsive
             class_name="custom-table"
           >
-            {' '}
             {/* Added responsive class for mobile devices */}
             <thead>
               <tr>
                 <th>Approval Id</th>
-                <th>User Id</th>
-                <th>Hospital Vaccine Id</th>
+                <th>User Name</th>
+                <th>Hospital</th>
+                <th>Vaccine</th>
                 <th>Appointment Date</th>
                 <th>Approval Status</th>
                 <th>Complete Status</th>

@@ -28,29 +28,33 @@ const AppointmentItem = (props) => {
   }, [dispatchToDB]);
 
   return (
-    <Card className="h-100">
+    <Card className="h-100 shadow-lg border-0 rounded">
       <Card.Img
         variant="top"
         src={picURL}
         height="200px"
-        style={{ objectFit: 'cover' }}
+        style={{
+          objectFit: 'cover',
+          borderTopLeftRadius: '0.25rem',
+          borderTopRightRadius: '0.25rem',
+        }}
       />
-      <Card.Body className="d-flex flex-column">
-        <div className="d-flex justify-content-between mb-3 align-items-start">
-          <div>
-            <span className="fs-2">{hospitalName}</span>
-            <br></br>
-            <span className="text-muted">vaccineId: {vaccineName}</span>{' '}
-            <br></br>
-            <span className="text-muted">Price: ${price}</span>
-            <br></br>
-            <span className="text-muted">Doses Required: {dosesRequired}</span>
-            <br></br>
-          </div>
+      <Card.Body className="d-flex flex-column align-items-center p-4">
+        <div className="text-center mb-3">
+          <Card.Title className="fs-4">{hospitalName}</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">
+            {vaccineName}
+          </Card.Subtitle>
+          <div className="text-muted mb-1">Doses Required: {dosesRequired}</div>
+          <div className="text-muted mb-1">Price: ${price}</div>
         </div>
-        <div className="text-center mt-auto">
-          <Button onClick={() => setShowModal(true)}>Set Appointment</Button>
-        </div>
+        <Button
+          variant="primary"
+          onClick={() => setShowModal(true)}
+          className="mt-auto"
+        >
+          Set Appointment
+        </Button>
 
         {showModal && (
           <AppointmentTimeModal

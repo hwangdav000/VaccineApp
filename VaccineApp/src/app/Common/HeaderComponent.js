@@ -10,23 +10,13 @@ const Header = (props) => {
   const accessToken = useSelector((store) => store.tokenReducer.accessToken);
   const user = useSelector((store) => store.userReducer.user);
   const usrName = user && user.userName ? user.userName : props.userName;
-  console.log(user);
-  console.log(accessToken);
 
   const dispatchToDB = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!accessToken) {
-      console.log('waiting on access token');
-      return;
-    }
-  }, [dispatchToDB, user._id]);
-
   const handleLogout = () => {
     // Dispatch a logout action here
     dispatchToDB(LogoutUser());
-    console.log('User logged out');
     navigate('/home');
   };
 
@@ -168,28 +158,13 @@ const Header = (props) => {
             </div>
             <div className="d-flex align-items-center">
               <div className="me-3">
-                <a
-                  href="https://facebook.com"
-                  className="text-white me-2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a className="text-white me-2">
                   <i className="bi bi-facebook"></i>
                 </a>
-                <a
-                  href="https://twitter.com"
-                  className="text-white me-2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a className="text-white me-2">
                   <i className="bi bi-twitter"></i>
                 </a>
-                <a
-                  href="https://instagram.com"
-                  className="text-white"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a className="text-white">
                   <i className="bi bi-instagram"></i>
                 </a>
               </div>

@@ -57,8 +57,9 @@ const AppointmentUserViewItem = ({
   return (
     <tr>
       <td>{item._id}</td>
-      <td>{item.userId}</td>
-      <td>{item.hospitalVaccineId}</td>
+      <td>{user.userName}</td>
+      <td>{hospitalName}</td>
+      <td>{vaccineName}</td>
       <td>{formattedDate}</td>
       <td>{item.approvalStatus}</td>
       <td>{item.completeStatus}</td>

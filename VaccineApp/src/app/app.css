@@ -9,18 +9,18 @@ body {
   margin: 0; /* Reset default margin */
 }
   
-  .footer {
-    margin-top: auto;
-  }
+.footer {
+  margin-top: auto;
+}
 
-  .app-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  main {
-    flex-grow: 1;
-  }
+.app-container {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
+}
 
   /* Styling for the main content area */
 .main-content {
@@ -191,4 +191,21 @@ body {
 
 .custom-table tr:last-child td:last-child {
   border-bottom-right-radius: 0.5rem;
+}
+
+.react-time-picker__wrapper {
+  border: none !important;
+}
+
+.time-picker-input input {
+  width: 100px !important;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+}
+
+.form-label {
+  margin-bottom: 0; /* Remove bottom margin for label */
 }

@@ -45,10 +45,9 @@ const Home = () => {
                 className="mb-4 "
                 style={{ fontSize: 'large' }}
               >
-                VaccineUP connects users with healthcare providers, enabling
-                them to easily find and schedule vaccination appointments with
-                trusted companies. Simplify your vaccination journey with
-                VaccineUP.
+                VaccineUP connects users with trusted hospitals, enabling them
+                to find and schedule vaccination appointments. Simplify your
+                vaccination journey with VaccineUP.
               </p>
               <NavLink to="/registration">
                 <Button
@@ -85,12 +84,12 @@ const Home = () => {
             >
               <Card className="h-100 shadow-lg border-0">
                 <Card.Body className="d-flex flex-column align-items-center">
-                  <i className="bi bi-journal-check h1 text-primary mb-3"></i>
+                  <i className="bi bi-clipboard2-heart h1 text-primary mb-3"></i>
                   <Card.Title className="text-center mb-3">
-                    Manage Vaccination Records
+                    Verified Vaccination Records
                   </Card.Title>
                   <Card.Text className="text-center">
-                    Easily store and access vaccination records for patients.
+                    Download certificates for completed vaccination appointments
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -101,12 +100,13 @@ const Home = () => {
             >
               <Card className="h-100 shadow-lg border-0">
                 <Card.Body className="d-flex flex-column align-items-center">
-                  <i className="bi bi-calendar-check h1 text-primary mb-3"></i>
+                  <i className="bi bi-calendar2-check h1 text-primary mb-3"></i>
                   <Card.Title className="text-center mb-3">
-                    Schedule Appointments
+                    Easily Schedule Appointments
                   </Card.Title>
                   <Card.Text className="text-center">
-                    Seamlessly schedule vaccination appointments for patients.
+                    schedule vaccination appointments using our website with
+                    trusted vendors
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -117,12 +117,13 @@ const Home = () => {
             >
               <Card className="h-100 shadow-lg border-0">
                 <Card.Body className="d-flex flex-column align-items-center">
-                  <i className="bi bi-geo-alt h1 text-primary mb-3"></i>
+                  <i className="bi bi-currency-dollar h1 text-primary mb-3"></i>
                   <Card.Title className="text-center mb-3">
-                    Track Vaccine Distribution
+                    Quick Payments
                   </Card.Title>
                   <Card.Text className="text-center">
-                    Monitor and manage vaccine distribution across locations.
+                    VaccineUP makes paying for appointments a quick and seamless
+                    process
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -144,7 +145,7 @@ const Home = () => {
                 <Card.Body className="d-flex flex-column align-items-center">
                   <i className="bi bi-people h1 text-primary mb-3"></i>
                   <Card.Title className="text-center mb-3">
-                    Total Users
+                    Total Customers
                   </Card.Title>
                   <Card.Text className="text-center">
                     <CountUp
@@ -162,9 +163,9 @@ const Home = () => {
             >
               <Card className="h-100 shadow-lg border-0">
                 <Card.Body className="d-flex flex-column align-items-center">
-                  <i className="bi bi-geo h1 text-primary mb-3"></i>
+                  <i className="bi bi-hospital h1 text-primary mb-3"></i>
                   <Card.Title className="text-center mb-3">
-                    Locations Covered
+                    Trusted Vendors
                   </Card.Title>
                   <Card.Text className="text-center">
                     <CountUp
