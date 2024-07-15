@@ -131,6 +131,13 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
+
+.user-appointment-container {
+  background-color: #eaeaea;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
 .custom-table {
   margin-top: 20px;
   border-collapse: separate;

@@ -213,7 +213,7 @@ const Report = () => {
         past7Days.push(date.toISOString().split('T')[0]);
         vaccinatedCountData[date.toISOString().split('T')[0]] = 0;
       }
-      console.log('looking at appointments list');
+
       appointmentsList.forEach((appointment) => {
         const aDate = appointment.appointmentDate.split('T')[0];
         console.log('Date ', aDate);
@@ -283,56 +283,60 @@ const Report = () => {
         >
           <h1 className="text-center">User Statistics</h1>
           <Tabs
-            defaultActiveKey="age"
+            defaultActiveKey="group1"
             className="mb-3 justify-content-center"
           >
             <Tab
-              eventKey="age"
-              title="Age Distribution"
+              eventKey="group1"
+              title="User Charts"
             >
-              <div className="mt-4">
-                <Bar data={ageBarChart} />
-              </div>
+              <Carousel>
+                <Carousel.Item>
+                  <div className="mt-4">
+                    <h2 className="text-center">Age Distribution</h2>
+                    <Bar data={ageBarChart} />
+                  </div>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <div className="mt-4">
+                    <h2 className="text-center">Gender Distribution</h2>
+                    <Pie data={genderPieChart} />
+                  </div>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <div className="mt-4">
+                    <h2 className="text-center">Profession Distribution</h2>
+                    <Pie data={professionPieChart} />
+                  </div>
+                </Carousel.Item>
+              </Carousel>
             </Tab>
             <Tab
-              eventKey="gender"
-              title="Gender Distribution"
+              eventKey="group2"
+              title="Vaccine Charts"
             >
-              <div className="mt-4">
-                <Pie data={genderPieChart} />
-              </div>
-            </Tab>
-            <Tab
-              eventKey="disease"
-              title="Disease Distribution"
-            >
-              <div className="mt-4">
-                <Pie data={diseasePieChart} />
-              </div>
-            </Tab>
-            <Tab
-              eventKey="profession"
-              title="Profession Distribution"
-            >
-              <div className="mt-4">
-                <Pie data={professionPieChart} />
-              </div>
-            </Tab>
-            <Tab
-              eventKey="vaccination"
-              title="Vaccination Distribution"
-            >
-              <div className="mt-4">
-                <Pie data={vaccinationPieChart} />
-              </div>
-            </Tab>
-            <Tab
-              eventKey="vaccinationCount"
-              title="Vaccination Count Distribution"
-            >
-              <div className="mt-4">
-                <Bar data={vaccinationCountBarChart} />
-              </div>
+              <Carousel>
+                <Carousel.Item>
+                  <div className="mt-4">
+                    <h2 className="text-center">Disease Distribution</h2>
+                    <Pie data={diseasePieChart} />
+                  </div>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <div className="mt-4">
+                    <h2 className="text-center">Vaccinated Distribution</h2>
+                    <Pie data={vaccinationPieChart} />
+                  </div>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <div className="mt-4">
+                    <h2 className="text-center">
+                      Vaccinated Count Distribution
+                    </h2>
+                    <Bar data={vaccinationCountBarChart} />
+                  </div>
+                </Carousel.Item>
+              </Carousel>
             </Tab>
           </Tabs>
         </div>
