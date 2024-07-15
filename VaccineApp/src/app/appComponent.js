@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './app.css';
 
 import Home from './Common/HomeComponent';
 import Footer from './Common/FooterComponent';
@@ -18,6 +17,7 @@ import MakeAppointment from './Application/Appointment/MakeAppointmentComponent'
 import ApproveAppointment from './Application/AppointmentView/ApproveAppointmentComponent';
 import UserAppointments from './Application/AppointmentView/UserAppointmentsComponent';
 import Report from './Application/Report/ReportComponent';
+import './app.css';
 
 export default class ApplicationComponent extends Component {
   constructor(props) {

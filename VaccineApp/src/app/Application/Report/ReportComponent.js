@@ -7,7 +7,6 @@ import { GetVaccinesFromDB } from '../../../state/Vaccine/vaccineAction';
 import { GetAllHospitalVaccinesFromDB } from '../../../state/HospitalVaccine/hospitalVaccineAction';
 import { GetUsersFromDB } from '../../../state/User/userAction';
 import { GetAllAppointmentsFromDB } from '../../../state/Appointment/appointmentAction';
-
 import {
   Chart,
   ArcElement,
@@ -17,6 +16,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { Tabs, Tab, Container } from 'react-bootstrap';
 
 Chart.register(
   ArcElement,
@@ -258,122 +258,85 @@ const Report = () => {
     return <p>Loading...</p>; // Optionally show a loading indicator
   }
 
+  const backgroundImg =
+    'https://images.unsplash.com/photo-1670502394307-fd0781f280e5?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+
   return (
-    <div style={{ maxWidth: '800px', margin: 'auto' }}>
-      <Carousel data-bs-theme="dark">
-        <Carousel.Item>
-          <div
-            style={{
-              height: '500px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: '100px',
-              marginBottom: '150px',
-            }}
+    <div
+      style={{
+        backgroundImage: `url(${backgroundImg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        minHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Container
+        fluid
+        className="d-flex justify-content-center align-items-center min-vh-100"
+      >
+        <div
+          className="p-4 hospital-container"
+          style={{ maxWidth: '900px', width: '100%' }}
+        >
+          <h1 className="text-center">User Statistics</h1>
+          <Tabs
+            defaultActiveKey="age"
+            className="mb-3 justify-content-center"
           >
-            <Bar data={ageBarChart} />
-          </div>
-          <Carousel.Caption>
-            <h5>Age Bar Chart</h5>
-            <p>Statistics of Users</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <div
-            style={{
-              height: '500px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: '100px',
-              marginBottom: '150px',
-            }}
-          >
-            <Pie data={genderPieChart} />
-          </div>
-          <Carousel.Caption>
-            <h5>Gender Pie Chart</h5>
-            <p>Distribution among Users</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-
-        <Carousel.Item>
-          <div
-            style={{
-              height: '500px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: '100px',
-              marginBottom: '150px',
-            }}
-          >
-            <Pie data={diseasePieChart} />
-          </div>
-          <Carousel.Caption>
-            <h5>Disease Pie Chart</h5>
-            <p>Distribution of Disease amongst Users</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-
-        <Carousel.Item>
-          <div
-            style={{
-              height: '500px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: '100px',
-              marginBottom: '150px',
-            }}
-          >
-            <Pie data={professionPieChart} />
-          </div>
-          <Carousel.Caption>
-            <h5>Profession Pie Chart</h5>
-            <p>Distribution of Profession amongst Users</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-
-        <Carousel.Item>
-          <div
-            style={{
-              height: '500px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: '100px',
-              marginBottom: '150px',
-            }}
-          >
-            <Pie data={vaccinationPieChart} />
-          </div>
-          <Carousel.Caption>
-            <h5>Vaccinated Pie Chart</h5>
-            <p>Distribution of Vaccinated Users</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-
-        <Carousel.Item>
-          <div
-            style={{
-              height: '500px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: '100px',
-              marginBottom: '150px',
-            }}
-          >
-            <Bar data={vaccinationCountBarChart} />
-          </div>
-          <Carousel.Caption>
-            <h5>Vaccination Count Chart</h5>
-            <p>Statistics of last 7 days</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-      </Carousel>
+            <Tab
+              eventKey="age"
+              title="Age Distribution"
+            >
+              <div className="mt-4">
+                <Bar data={ageBarChart} />
+              </div>
+            </Tab>
+            <Tab
+              eventKey="gender"
+              title="Gender Distribution"
+            >
+              <div className="mt-4">
+                <Pie data={genderPieChart} />
+              </div>
+            </Tab>
+            <Tab
+              eventKey="disease"
+              title="Disease Distribution"
+            >
+              <div className="mt-4">
+                <Pie data={diseasePieChart} />
+              </div>
+            </Tab>
+            <Tab
+              eventKey="profession"
+              title="Profession Distribution"
+            >
+              <div className="mt-4">
+                <Pie data={professionPieChart} />
+              </div>
+            </Tab>
+            <Tab
+              eventKey="vaccination"
+              title="Vaccination Distribution"
+            >
+              <div className="mt-4">
+                <Pie data={vaccinationPieChart} />
+              </div>
+            </Tab>
+            <Tab
+              eventKey="vaccinationCount"
+              title="Vaccination Count Distribution"
+            >
+              <div className="mt-4">
+                <Bar data={vaccinationCountBarChart} />
+              </div>
+            </Tab>
+          </Tabs>
+        </div>
+      </Container>
     </div>
   );
 };

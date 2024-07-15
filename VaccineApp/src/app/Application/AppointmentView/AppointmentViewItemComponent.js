@@ -10,7 +10,7 @@ const AppointmentViewItem = ({
   handleReject,
 }) => {
   const accessToken = useSelector((store) => store.tokenReducer.accessToken);
- 
+
   const dispatchToDB = useDispatch();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const AppointmentViewItem = ({
           onClick={() => {
             handleApprove(item._id);
           }}
-          variant="info"
+          variant="success"
         >
           Approve
         </Button>
@@ -44,7 +44,7 @@ const AppointmentViewItem = ({
           onClick={() => {
             handleReject(item._id);
           }}
-          variant="info"
+          variant="danger"
         >
           Reject
         </Button>

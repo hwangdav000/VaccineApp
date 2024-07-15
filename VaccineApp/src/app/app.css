@@ -118,8 +118,19 @@ body {
   padding: 20px;
 }
 
-/* Hospital.css */
+.hospital-vaccine-container {
+  background-color: #eaeaea;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
 
+.approve-appointment-container {
+  background-color: #eaeaea;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
 .custom-table {
   margin-top: 20px;
   border-collapse: separate;
@@ -127,6 +138,7 @@ body {
   border: 1px solid #343a40;
   border-radius: 0.5rem;
   overflow: hidden;
+  background-color: #ffffff;
 }
 
 .custom-table th,
@@ -139,18 +151,19 @@ body {
 .custom-table th {
   background-color: #343a40;
   color: #ffffff;
+  border-top: 1px solid #343a40;
 }
 
 .custom-table tr:nth-child(even) {
-  background-color: #505050; /* Darker grey for even rows */
+  background-color: #f8f9fa !important; /* Light grey for even rows */
 }
 
 .custom-table tr:nth-child(odd) {
-  background-color: #606060; /* Darker grey for odd rows */
+  background-color: #37269b !important; /* White for odd rows */
 }
 
 .custom-table tr:hover {
-  background-color: #707070; /* Even darker grey for hover effect */
+  background-color: #e9ecef; /* Light grey for hover effect */
 }
 
 .custom-table td {
@@ -169,6 +182,6 @@ body {
   border-bottom-left-radius: 0.5rem;
 }
 
-custom-table tr:last-child td:last-child {
+.custom-table tr:last-child td:last-child {
   border-bottom-right-radius: 0.5rem;
 }

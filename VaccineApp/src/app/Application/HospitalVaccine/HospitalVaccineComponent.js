@@ -7,9 +7,11 @@ import {
   SaveHospitalVaccineToDB,
   GetHospitalVaccinesFromDB,
 } from '../../../state/HospitalVaccine/hospitalVaccineAction';
+import { Form, Container, Row, Col, Button, Table } from 'react-bootstrap';
 
 const VaccineManagement = () => {
   const accessToken = useSelector((store) => store.tokenReducer.accessToken);
+  const dispatch = useDispatch();
   const hospitalList = useSelector(
     (store) => store.hospitalReducer.hospitalList
   );
@@ -17,8 +19,6 @@ const VaccineManagement = () => {
   const hospitalVaccineList = useSelector(
     (store) => store.hospitalVaccineReducer.hospitalVaccinesList
   );
-
-  const dispatchToDB = useDispatch();
 
   const [selectedHospital, setSelectedHospital] = useState('');
   const [vaccines, setVaccines] = useState([]);
@@ -29,13 +29,13 @@ const VaccineManagement = () => {
   });
 
   useEffect(() => {
-    dispatchToDB(GetHospitalsFromDB(accessToken));
-    dispatchToDB(GetVaccinesFromDB(accessToken));
-  }, [dispatchToDB, accessToken]);
+    dispatch(GetHospitalsFromDB(accessToken));
+    dispatch(GetVaccinesFromDB(accessToken));
+  }, [dispatch, accessToken]);
 
   useEffect(() => {
     if (hospitalVaccineList && hospitalVaccineList.length > 0) {
-      setVaccines(hospitalVaccineList);
+      setVaccines([...hospitalVaccineList]);
     }
   }, [hospitalVaccineList]);
 
@@ -45,18 +45,18 @@ const VaccineManagement = () => {
     setVaccines([]);
 
     if (hospitalId) {
-      dispatchToDB(GetHospitalVaccinesFromDB(hospitalId, accessToken));
+      dispatch(GetHospitalVaccinesFromDB(hospitalId, accessToken));
     }
   };
 
   const handleAddVaccine = () => {
+    const updatedVaccines = [...vaccines, { ...newVaccine }];
+    setVaccines(updatedVaccines);
     setNewVaccine({
       vaccineId: '',
       price: '',
       dosesRequired: '',
     });
-
-    setVaccines([...vaccines, { ...newVaccine }]);
   };
 
   const handleDeleteVaccine = (index) => {
@@ -71,137 +71,163 @@ const VaccineManagement = () => {
       vaccines: vaccines,
     };
 
-    dispatchToDB(SaveHospitalVaccineToDB(newHospitalVaccineList, accessToken));
+    dispatch(SaveHospitalVaccineToDB(newHospitalVaccineList, accessToken));
   };
 
+  const backgroundImg =
+    'https://images.unsplash.com/photo-1670502394307-fd0781f280e5?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+
   return (
-    <div className="container">
-      <h2>Vaccine Management</h2>
+    <div
+      style={{
+        backgroundImage: `url(${backgroundImg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        minHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+      className="main-content"
+    >
+      <Container className="d-flex justify-content-center align-items-center min-vh-100">
+        <div
+          className="p-4 hospital-vaccine-container"
+          style={{ maxWidth: '800px', width: '100%' }}
+        >
+          <h2 className="my-4">Vaccine Management</h2>
 
-      {/* Hospital Selector Dropdown */}
-      <div className="mb-3">
-        <label
-          htmlFor="hospitalSelect"
-          className="form-label"
-        >
-          Select Hospital:
-        </label>
-        <select
-          className="form-select"
-          id="hospitalSelect"
-          value={selectedHospital}
-          onChange={handleHospitalChange}
-        >
-          <option value="">Select Hospital</option>
-          {hospitalList.map((hospital, index) => (
-            <option
-              key={index}
-              value={hospital._id}
+          {/* Hospital Selector Dropdown */}
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="hospitalSelect">Select Hospital:</Form.Label>
+            <Form.Select
+              id="hospitalSelect"
+              value={selectedHospital}
+              onChange={handleHospitalChange}
             >
-              {hospital.hospitalName}
-            </option>
-          ))}
-        </select>
-      </div>
+              <option
+                value=""
+                style={{ display: 'none' }}
+              >
+                Select Hospital
+              </option>
+              {hospitalList.map((hospital) => (
+                <option
+                  key={hospital._id}
+                  value={hospital._id}
+                >
+                  {hospital.hospitalName}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
 
-      {/* Vaccine Table */}
-      {selectedHospital && (
-        <table className="table table-bordered">
-          <thead>
-            <tr>
-              <th>Vaccine</th>
-              <th>Price</th>
-              <th>Doses Required</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {vaccines.map((vaccine, index) => (
-              <tr key={index}>
-                <td>
-                  <select
-                    className="form-select"
-                    value={vaccine.vaccineId}
-                    onChange={(e) => {
-                      const selectedVaccineId = e.target.value;
-                      const updatedVaccines = [...vaccines];
-                      updatedVaccines[index].vaccineId = selectedVaccineId;
-                      setVaccines(updatedVaccines);
-                    }}
-                  >
-                    <option value="">Select Vaccine</option>
-                    {vaccinesList.map((vaccineOption, idx) => (
-                      <option
-                        key={idx}
-                        value={vaccineOption._id}
+          {/* Vaccine Table */}
+          {selectedHospital && (
+            <Table
+              striped
+              bordered
+              hover
+              responsive
+              className="custom-table"
+            >
+              <thead>
+                <tr>
+                  <th>Vaccine</th>
+                  <th>Price</th>
+                  <th>Doses Required</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {vaccines.map((vaccine, index) => (
+                  <tr key={index}>
+                    <td>
+                      <Form.Select
+                        value={vaccine.vaccineId}
+                        onChange={(e) => {
+                          const selectedVaccineId = e.target.value;
+                          const updatedVaccines = [...vaccines];
+                          updatedVaccines[index].vaccineId = selectedVaccineId;
+                          setVaccines(updatedVaccines);
+                        }}
                       >
-                        {vaccineOption.vaccineName}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={vaccine.price}
-                    onChange={(e) => {
-                      const updatedVaccines = [...vaccines];
-                      updatedVaccines[index].price = e.target.value;
-                      setVaccines(updatedVaccines);
-                    }}
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={vaccine.dosesRequired}
-                    onChange={(e) => {
-                      const updatedVaccines = [...vaccines];
-                      updatedVaccines[index].dosesRequired = e.target.value;
-                      setVaccines(updatedVaccines);
-                    }}
-                  />
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={() => handleDeleteVaccine(index)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-      <div>
-        {/* Add Vaccine Button */}
-        {selectedHospital && (
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={handleAddVaccine}
-            style={{ marginRight: '1rem' }}
-          >
-            Add Vaccine
-          </button>
-        )}
+                        <option
+                          value=""
+                          style={{ display: 'none' }}
+                        >
+                          Select Vaccine
+                        </option>
+                        {vaccinesList.map((vaccineOption) => (
+                          <option
+                            key={vaccineOption._id}
+                            value={vaccineOption._id}
+                          >
+                            {vaccineOption.vaccineName}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </td>
+                    <td>
+                      <Form.Control
+                        type="text"
+                        value={vaccine.price}
+                        onChange={(e) => {
+                          const updatedVaccines = [...vaccines];
+                          updatedVaccines[index].price = e.target.value;
+                          setVaccines(updatedVaccines);
+                        }}
+                      />
+                    </td>
+                    <td>
+                      <Form.Control
+                        type="text"
+                        value={vaccine.dosesRequired}
+                        onChange={(e) => {
+                          const updatedVaccines = [...vaccines];
+                          updatedVaccines[index].dosesRequired = e.target.value;
+                          setVaccines(updatedVaccines);
+                        }}
+                      />
+                    </td>
+                    <td>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleDeleteVaccine(index)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          )}
 
-        {/* Save Button */}
-        {selectedHospital && (
-          <button
-            type="button"
-            className="btn btn-success"
-            onClick={handleSaveChanges}
-          >
-            Save Changes
-          </button>
-        )}
-      </div>
+          <div className="my-4">
+            {/* Add Vaccine Button */}
+            {selectedHospital && (
+              <Button
+                variant="primary"
+                className="me-2"
+                onClick={handleAddVaccine}
+              >
+                Add Vaccine
+              </Button>
+            )}
+
+            {/* Save Button */}
+            {selectedHospital && (
+              <Button
+                variant="success"
+                onClick={handleSaveChanges}
+              >
+                Save Changes
+              </Button>
+            )}
+          </div>
+        </div>
+      </Container>
     </div>
   );
 };
