@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { LogoutUser } from '../../state/User/userAction';
 import star from '../images/half-star-dodger.png';
+import { useNavigate } from 'react-router-dom';
 
 const Header = (props) => {
   const accessToken = useSelector((store) => store.tokenReducer.accessToken);
@@ -11,7 +12,10 @@ const Header = (props) => {
   const usrName = user && user.userName ? user.userName : props.userName;
   console.log(user);
   console.log(accessToken);
+
   const dispatchToDB = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!accessToken) {
       console.log('waiting on access token');
@@ -23,6 +27,7 @@ const Header = (props) => {
     // Dispatch a logout action here
     dispatchToDB(LogoutUser());
     console.log('User logged out');
+    navigate('/home');
   };
 
   return (

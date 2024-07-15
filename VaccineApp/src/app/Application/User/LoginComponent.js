@@ -1,12 +1,15 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Form, Container, Row, Col, Alert } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LoginUserDB } from '../../../state/User/userAction';
 
 const Login = () => {
   const accessToken = useSelector((store) => store.tokenReducer.accessToken);
+  const loginState = useSelector((store) => store.userReducer.login);
+
   const dispatch = useDispatch();
+  let navigate = useNavigate();
   const [error, setError] = useState(null);
 
   const sessionName = useRef(null);
@@ -25,6 +28,19 @@ const Login = () => {
     sessionName.current.value = '';
     sessionPassword.current.value = '';
   };
+
+  useEffect(() => {
+    console.log('in use effect');
+    if (loginState) {
+      console.log('going to navigate');
+      navigate('/home');
+    }
+
+    return () => {
+      console.log('Component will unmount');
+      dispatch({ type: 'STORE.RESETLOGIN' });
+    };
+  }, [navigate, loginState]);
 
   const backgroundImg =
     'https://images.unsplash.com/photo-1543157145-f78c636d023d?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';

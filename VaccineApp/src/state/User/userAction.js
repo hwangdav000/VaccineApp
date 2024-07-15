@@ -16,6 +16,20 @@ export const AddUsersToStore = (users) => {
   };
 };
 
+export const LoginUserToStore = (user) => {
+  return {
+    type: actionTypes.LOGIN_USER,
+    payload: user,
+  };
+};
+
+export const UpdateLoginToStore = (state) => {
+  return {
+    type: actionTypes.UPDATE_LOGIN,
+    payload: state,
+  };
+};
+
 export const LogoutUser = () => {
   return {
     type: actionTypes.LOGOUT_USER,
@@ -34,6 +48,7 @@ export const LoginUserDB = (user) => {
         let accessToken = collection.data.accessToken;
         let refreshToken = collection.data.refreshToken;
 
+        dispatch(UpdateLoginToStore(true));
         dispatch(AddUserToStore(loggedUser));
         dispatch(AddTokenToStore({ accessToken, refreshToken }));
       })

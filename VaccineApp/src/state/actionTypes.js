@@ -1,3 +1,6 @@
+export const UPDATE_LOGIN = 'STORE.UPDATELOGIN';
+export const RESET_LOGIN = 'STORE.RESETLOGIN';
+
 export const ADD_USER_TO_STORE = 'STORE.ADDUSER';
 export const ADD_USERS_TO_STORE = 'STORE.ADDUSERS';
 export const LOGIN_USER = 'STORE.LOGIN';

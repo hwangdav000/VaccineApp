@@ -9,6 +9,7 @@ let initialState = {
     mobile: '',
   },
   userList: [],
+  login: false,
 };
 
 let userReducer = (state = initialState, action) => {
@@ -19,6 +20,12 @@ let userReducer = (state = initialState, action) => {
 
     case actionTypes.ADD_USERS_TO_STORE:
       return { ...state, userList: action.payload };
+
+    case actionTypes.UPDATE_LOGIN:
+      return { ...state, login: true }; //new state dispatched to store upon update
+
+    case actionTypes.RESET_LOGIN:
+      return { ...state, login: false }; //new state dispatched to store upon update
 
     case actionTypes.LOGOUT_USER:
       return {

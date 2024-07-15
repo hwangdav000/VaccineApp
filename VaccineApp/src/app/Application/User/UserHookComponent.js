@@ -11,7 +11,8 @@ import { useNavigate } from 'react-router-dom';
 const UserHook = () => {
   const accessToken = useSelector((store) => store.tokenReducer.accessToken);
   const user = useSelector((store) => store.userReducer.user);
-
+  const loginState = useSelector((store) => store.userReducer.login);
+  console.log('loginstate is : ' + loginState);
   let [uName, setUserName] = useState('');
   let [pass, setPassword] = useState('');
   let [fullName, setFullName] = useState('');
@@ -69,6 +70,19 @@ const UserHook = () => {
       return;
     }
   }, [dispatchToDB, accessToken]);
+
+  useEffect(() => {
+    console.log('in use effect');
+    if (loginState) {
+      console.log('going to navigate');
+      navigate('/home');
+    }
+
+    return () => {
+      console.log('Component will unmount');
+      dispatchToDB({ type: 'STORE.RESETLOGIN' });
+    };
+  }, [navigate, loginState]);
 
   return (
     <>
