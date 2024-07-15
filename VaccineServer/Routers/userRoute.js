@@ -22,7 +22,13 @@ userRouter.post('/api/signinup', (req, res) => {
         newUser
           .save()
           .then((newUser) => {
-            res.send(newUser);
+            const { accessToken, refreshToken } = generateTokens(newUser._id);
+
+            res.send({
+              newUser,
+              accessToken,
+              refreshToken,
+            });
           })
           .catch((err1) => {
             console.log('err signup', err1);

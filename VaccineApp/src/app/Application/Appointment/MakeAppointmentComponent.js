@@ -42,7 +42,7 @@ const MakeAppointment = () => {
     >
       <Container className="d-flex justify-content-center align-items-start min-vh-100 mt-5">
         <div className="p-4 user-appointment-container">
-          <h1>Make a Vaccination Appointment Today!</h1>
+          <h1 className="text-center">Schedule a Vaccination</h1>
           <Row
             md={2}
             xs={1}

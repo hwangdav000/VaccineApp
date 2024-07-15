@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
 import { SaveUserToDBUsingFetch } from '../../../state/User/userAction';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Registration = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const loginState = useSelector((store) => store.userReducer.login);
   const [userData, setUserData] = useState({
     userName: '',
     password: '',
@@ -41,8 +44,24 @@ const Registration = () => {
       profession: '',
     });
   };
+  console.log('login state is ' + loginState);
+
+  useEffect(() => {
+    console.log('in use effect');
+    if (loginState) {
+      console.log('going to navigate');
+      navigate('/home');
+    }
+
+    return () => {
+      console.log('Component will unmount');
+      dispatch({ type: 'STORE.RESETLOGIN' });
+    };
+  }, [navigate, loginState]);
+
   const backgroundImg =
     'https://images.unsplash.com/photo-1492892132812-a00a8b245c45?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+
   return (
     <div
       style={{

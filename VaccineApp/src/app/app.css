@@ -197,15 +197,3 @@ main {
   border: none !important;
 }
 
-.time-picker-input input {
-  width: 100px !important;
-}
-
-.form-group {
-  display: flex;
-  align-items: center;
-}
-
-.form-label {
-  margin-bottom: 0; /* Remove bottom margin for label */
-}

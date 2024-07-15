@@ -7,7 +7,15 @@ import {
   SaveHospitalVaccineToDB,
   GetHospitalVaccinesFromDB,
 } from '../../../state/HospitalVaccine/hospitalVaccineAction';
-import { Form, Container, Row, Col, Button, Table } from 'react-bootstrap';
+import {
+  Form,
+  Container,
+  Row,
+  Col,
+  Button,
+  Table,
+  Alert,
+} from 'react-bootstrap';
 
 const VaccineManagement = () => {
   const accessToken = useSelector((store) => store.tokenReducer.accessToken);
@@ -27,6 +35,7 @@ const VaccineManagement = () => {
     price: '',
     dosesRequired: '',
   });
+  const [showSavedMessage, setShowSavedMessage] = useState(false);
 
   useEffect(() => {
     dispatch(GetHospitalsFromDB(accessToken));
@@ -72,6 +81,10 @@ const VaccineManagement = () => {
     };
 
     dispatch(SaveHospitalVaccineToDB(newHospitalVaccineList, accessToken));
+    setShowSavedMessage(true);
+    setTimeout(() => {
+      setShowSavedMessage(false);
+    }, 2000);
   };
 
   const backgroundImg =
@@ -226,6 +239,14 @@ const VaccineManagement = () => {
               </Button>
             )}
           </div>
+          {showSavedMessage && (
+            <Alert
+              variant="success"
+              className="my-3"
+            >
+              Changes have been saved.
+            </Alert>
+          )}
         </div>
       </Container>
     </div>

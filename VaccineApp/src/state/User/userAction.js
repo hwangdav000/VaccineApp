@@ -69,6 +69,7 @@ export const SaveUserToDB = (newUser) => {
       )
       .then((collection) => {
         let loggedUser = collection.data;
+        dispatch(UpdateLoginToStore(true));
         dispatch(AddUserToStore(loggedUser));
       })
       .catch((err) => {
@@ -89,8 +90,14 @@ export const SaveUserToDBUsingFetch = (newUser) => {
         body: JSON.stringify(newUser),
       })
       .then((response) => response.json())
-      .then((userData) => {
+      .then((collection) => {
+        console.log(collection);
+        let userData = collection.newUser;
+        let accessToken = collection.accessToken;
+        let refreshToken = collection.refreshToken;
+        dispatch(UpdateLoginToStore(true));
         dispatch(AddUserToStore(userData));
+        dispatch(AddTokenToStore({ accessToken, refreshToken }));
         return true;
       })
       .catch((err) => {

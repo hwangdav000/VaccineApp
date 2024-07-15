@@ -8,6 +8,9 @@ import { GetHospitalsFromDB } from '../../../state/Hospital/hospitalAction';
 import { GetVaccinesFromDB } from '../../../state/Vaccine/vaccineAction';
 
 const UserAppointments = () => {
+  const backgroundImg =
+    'https://images.unsplash.com/photo-1494516192674-b82b5f1e61dc?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+
   const accessToken = useSelector((store) => store.tokenReducer.accessToken);
   const user = useSelector((store) => store.userReducer.user);
   const hospitalList = useSelector(
@@ -21,6 +24,11 @@ const UserAppointments = () => {
     (store) => store.hospitalVaccineReducer.hospitalVaccinesList
   );
   const dispatchToDB = useDispatch();
+  console.log(appointments);
+  // ensure that appointments are filtered by user
+  const filteredAppointments = appointments.filter(
+    (appointment) => appointment.userId === user._id
+  );
 
   useEffect(() => {
     if (!accessToken) {
@@ -33,15 +41,31 @@ const UserAppointments = () => {
     dispatchToDB(GetAllHospitalVaccinesFromDB(accessToken));
   }, [dispatchToDB, accessToken, user._id]);
 
-  if (!appointments || appointments.length === 0) {
+  if (!filteredAppointments || filteredAppointments.length === 0) {
     return (
-      <Container className="my-5 text-center">
-        <h2>No Appointments Found</h2>
-      </Container>
+      <div
+        style={{
+          backgroundImage: `url(${backgroundImg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          minHeight: '100vh', // Ensure full viewport height
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        className="main-content"
+      >
+        <Container className="d-flex justify-content-center align-items-start min-vh-100 mt-5">
+          <div className="p-4 user-appointment-container">
+            <h1 className="text-center mb-3">No Appointments Found</h1>
+            <Container className="my-5 text-center">
+              <h2>Schedule an appointment to view</h2>
+            </Container>
+          </div>
+        </Container>
+      </div>
     );
   }
-  const backgroundImg =
-    'https://images.unsplash.com/photo-1494516192674-b82b5f1e61dc?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
   return (
     <div
@@ -80,7 +104,7 @@ const UserAppointments = () => {
               </tr>
             </thead>
             <tbody>
-              {appointments.map((item) => {
+              {filteredAppointments.map((item) => {
                 const hVaccineDetail = hospitalVaccineList.find(
                   (hVaccine) => hVaccine._id === item.hospitalVaccineId
                 );

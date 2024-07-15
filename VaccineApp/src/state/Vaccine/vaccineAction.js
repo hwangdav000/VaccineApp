@@ -8,6 +8,13 @@ export const AddVaccinesToStore = (vaccines) => {
   };
 };
 
+export const AddVaccineToStore = (vaccine) => {
+  return {
+    type: actionTypes.ADD_VACCINE_TO_STORE,
+    payload: vaccine,
+  };
+};
+
 export const SaveVaccineToDB = (newVaccine, accessToken) => {
   const config = {
     headers: {
@@ -21,6 +28,7 @@ export const SaveVaccineToDB = (newVaccine, accessToken) => {
       .then((collection) => {
         let loggedVaccine = collection.data;
         console.log('logged vaccine ', loggedVaccine);
+        dispatch(AddVaccineToStore(loggedVaccine));
       })
       .catch((err) => {
         console.log('error while saving', err);

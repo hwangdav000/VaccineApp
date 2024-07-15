@@ -10,6 +10,11 @@ let vaccineReducer = (state = initialState, action) => {
     case actionTypes.ADD_VACCINES_TO_STORE:
       return { ...state, vaccineList: action.payload };
 
+    case actionTypes.ADD_VACCINE_TO_STORE:
+      return {
+        ...state,
+        vaccineList: [...state.vaccineList, action.payload],
+      };
     default:
       return state;
   }

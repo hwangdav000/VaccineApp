@@ -37,7 +37,7 @@ const AppointmentCheckoutModal = ({
     // Example: dispatch action to save appointment to DB
 
     dispatchToDB(SaveAppointmentToDB(appointmentDetail, accessToken));
-    alert('Appointment submitted successfully!');
+    //alert('Appointment submitted successfully!');
     handleAllClose(); // Close the checkout modal after checkout
   };
 
