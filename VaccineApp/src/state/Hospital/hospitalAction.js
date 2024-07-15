@@ -8,6 +8,13 @@ export const AddHospitalsToStore = (hospitals) => {
   };
 };
 
+export const AddHospitalToStore = (hospital) => {
+  return {
+    type: actionTypes.ADD_HOSPITAL_TO_STORE,
+    payload: hospital,
+  };
+};
+
 export const AddPicURLToStore = (URL) => {
   return {
     type: actionTypes.ADD_PICURL_TO_STORE,
@@ -30,8 +37,10 @@ export const SaveHospitalToDB = (newHospital, accessToken) => {
         config
       )
       .then((collection) => {
+        // add saved hospital to hospital list
         let loggedHospital = collection.data;
         console.log('hospital saved', loggedHospital);
+        dispatch(AddHospitalToStore(loggedHospital));
       })
       .catch((err) => {
         console.log('error while saving', err);

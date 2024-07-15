@@ -5,8 +5,8 @@ let initialState = {
     _id: '667c49cbbe3b4ec49f5f9d2b',
     userName: 'ADMIN',
     password: 'password',
-    address: 'street',
-    mobile: 111,
+    address: '',
+    mobile: '',
   },
   userList: [],
 };
@@ -20,6 +20,11 @@ let userReducer = (state = initialState, action) => {
     case actionTypes.ADD_USERS_TO_STORE:
       return { ...state, userList: action.payload };
 
+    case actionTypes.LOGOUT_USER:
+      return {
+        ...state,
+        user: { _id: '', userName: '', password: '', address: '', mobile: '' },
+      };
     default:
       return state;
   }

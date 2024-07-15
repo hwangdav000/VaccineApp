@@ -16,6 +16,12 @@ export const AddUsersToStore = (users) => {
   };
 };
 
+export const LogoutUser = () => {
+  return {
+    type: actionTypes.LOGOUT_USER,
+  };
+};
+
 export const LoginUserDB = (user) => {
   return (dispatch) => {
     axios

@@ -1,0 +1,174 @@
+html, body {
+  height: 100%;
+  margin: 0; /* Reset default margin */
+}
+  
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0; /* Reset default margin */
+}
+  
+  .footer {
+    margin-top: auto;
+  }
+
+  .app-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  main {
+    flex-grow: 1;
+  }
+
+  /* Styling for the main content area */
+.main-content {
+  min-height: calc(100vh - 20px);
+}
+
+.login-container {
+
+  display: flex;
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
+  margin-top: 25vh;
+  padding: 20px; /* Optional padding */
+}
+
+.login-form-card {
+  background-color: #ffffff; /* White background for the login form */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  max-width: 600px; /* Limit width of the login form */
+  width: 100%;
+  padding: 30px;
+}
+
+
+.bg-light-gray {
+  background-color: #eaeaea; /* Example darker color */
+}
+
+@keyframes fadeInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animated-section.fadeInFromLeft {
+  animation: fadeInFromLeft 1s ease-out;
+}
+
+.animated-section.fadeInFromRight {
+  animation: fadeInFromRight 1s ease-out;
+}
+
+.bg-gradient {
+  background: linear-gradient(to right, #ffffff, #f0f0f0);
+}
+
+.custom-form {
+  background-color: #eaeaea;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.custom-form .form-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.custom-form .form-control {
+  border-color: #eaeaea;
+}
+
+.custom-form .button-one-line {
+  margin-top: 20px;
+}
+
+.hospital-container {
+  background-color: #eaeaea;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.vaccine-container {
+  background-color: #eaeaea;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* Hospital.css */
+
+.custom-table {
+  margin-top: 20px;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #343a40;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 10px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.custom-table th {
+  background-color: #343a40;
+  color: #ffffff;
+}
+
+.custom-table tr:nth-child(even) {
+  background-color: #505050; /* Darker grey for even rows */
+}
+
+.custom-table tr:nth-child(odd) {
+  background-color: #606060; /* Darker grey for odd rows */
+}
+
+.custom-table tr:hover {
+  background-color: #707070; /* Even darker grey for hover effect */
+}
+
+.custom-table td {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.custom-table th:first-child {
+  border-top-left-radius: 0.5rem;
+}
+
+.custom-table th:last-child {
+  border-top-right-radius: 0.5rem;
+}
+
+.custom-table tr:last-child td:first-child {
+  border-bottom-left-radius: 0.5rem;
+}
+
+custom-table tr:last-child td:last-child {
+  border-bottom-right-radius: 0.5rem;
+}

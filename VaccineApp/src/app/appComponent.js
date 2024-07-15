@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './app.css';
 
 import Home from './Common/HomeComponent';
@@ -13,6 +8,9 @@ import Header from './Common/HeaderComponent';
 import NotFound from './Common/NotFoundComponent';
 
 import UserHook from './Application/User/UserHookComponent';
+import Login from './Application/User/LoginComponent';
+import Registration from './Application/User/RegistrationComponent';
+
 import Vaccine from './Application/Vaccine/VaccineComponent';
 import Hospital from './Application/Hospital/HospitalComponent';
 import VaccineManagement from './Application/HospitalVaccine/HospitalVaccineComponent';
@@ -28,57 +26,68 @@ export default class ApplicationComponent extends Component {
 
   render() {
     return (
-      <>
-        <Router>
-          <div>
-            <Header />
+      <Router>
+        <div className="app-container d-flex flex-column">
+          <Header />
+          <main className="flex-grow-1">
             <Routes>
               <Route
                 path="/"
                 element={<Home />}
               />
-
               <Route
-                path="home"
+                path="/home"
                 element={<Home />}
               />
               <Route
-                path="user"
+                path="/user"
                 element={<UserHook />}
               />
               <Route
-                path="hospital"
+                path="/login"
+                element={<Login />}
+              />
+              <Route
+                path="/registration"
+                element={<Registration />}
+              />
+              <Route
+                path="/hospital"
                 element={<Hospital />}
               />
               <Route
-                path="vaccine"
+                path="/vaccine"
                 element={<Vaccine />}
               />
               <Route
-                path="management"
+                path="/management"
                 element={<VaccineManagement />}
               />
               <Route
-                path="makeAppointment"
+                path="/makeAppointment"
                 element={<MakeAppointment />}
               />
               <Route
-                path="approveAppointment"
+                path="/approveAppointment"
                 element={<ApproveAppointment />}
               />
               <Route
-                path="userAppointment"
+                path="/userAppointment"
                 element={<UserAppointments />}
               />
               <Route
-                path="report"
+                path="/report"
                 element={<Report />}
               />
+              <Route
+                path="*"
+                element={<NotFound />}
+              />
             </Routes>
-            <Footer />
-          </div>
-        </Router>
-      </>
+          </main>
+          <Footer />
+        </div>
+      </Router>
     );
   }
 }

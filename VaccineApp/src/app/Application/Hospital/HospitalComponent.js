@@ -1,195 +1,237 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import {
   SaveHospitalToDB,
   GetHospitalsFromDB,
 } from '../../../state/Hospital/hospitalAction';
-import { Button, Form, Container, Row, Col } from 'react-bootstrap';
+import { Form, Container, Row, Col, Button, Table } from 'react-bootstrap';
 
 const Hospital = () => {
   const accessToken = useSelector((store) => store.tokenReducer.accessToken);
+  const dispatch = useDispatch();
+  const hospitalList = useSelector(
+    (store) => store.hospitalReducer.hospitalList
+  );
+  console.log(hospitalList);
 
-  let hospitalList = useSelector((state) => state.hospitalReducer.hospitalList);
-  const user = useSelector((store) => store.userReducer.user);
+  useEffect(() => {
+    dispatch(GetHospitalsFromDB(accessToken));
+  }, [dispatch, accessToken]);
 
-  let hospitalName = useRef('');
-  let address = useRef('');
-  let type = useRef('');
-  let picURL = useRef('');
-  let description = useRef('');
+  const hospitalNameRef = useRef('');
+  const addressRef = useRef('');
+  const typeRef = useRef('');
+  const picURLRef = useRef('');
+  const descriptionRef = useRef('');
 
   const [showHospitals, setShowHospitals] = useState(false);
 
-  let dispatchToDB = useDispatch();
-
-  const handleButtonClick = () => {
-    dispatchToDB(GetHospitalsFromDB(accessToken));
-    setShowHospitals(true);
-  };
-
-  let saveHospital = (evt) => {
-    let newHospital = {
-      hospitalName: hospitalName.current.value,
-      address: address.current.value,
-      hospitalType: type.current.value,
-      picURL: picURL.current.value,
-      description: description.current.value,
+  const saveHospital = (evt) => {
+    evt.preventDefault();
+    const newHospital = {
+      hospitalName: hospitalNameRef.current.value,
+      address: addressRef.current.value,
+      hospitalType: typeRef.current.value,
+      picURL: picURLRef.current.value,
+      description: descriptionRef.current.value,
     };
 
-    dispatchToDB(SaveHospitalToDB(newHospital, accessToken));
+    dispatch(SaveHospitalToDB(newHospital, accessToken));
 
-    hospitalName.current.value = '';
-    address.current.value = '';
-    type.current.value = '';
-    picURL.current.value = '';
-    description.current.value = '';
-
-    evt.preventDefault();
+    // Clear input fields after saving
+    hospitalNameRef.current.value = '';
+    addressRef.current.value = '';
+    typeRef.current.value = '';
+    picURLRef.current.value = '';
+    descriptionRef.current.value = '';
   };
 
+  const backgroundImg =
+    'https://images.unsplash.com/photo-1670502394307-fd0781f280e5?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+
   return (
-    <>
-      <Container className="componentClass">
-        <h1>Save Hospital Page</h1>
-        <Form className="col-md-8">
-          <Form.Group
-            as={Row}
-            className="mb-3"
-          >
-            <Form.Label
-              column
-              sm={2}
-            >
-              <b>Hospital Name:</b>
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                type="text"
-                ref={hospitalName}
-                placeholder="Please enter hospital name"
-                maxLength={40}
-                required
-              />
-            </Col>
-          </Form.Group>
+    <div
+      style={{
+        backgroundImage: `url(${backgroundImg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        minHeight: '100vh', // Ensure full viewport height
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+      className="main-content"
+    >
+      <Container className="d-flex justify-content-center align-items-center min-vh-100">
+        <div
+          className="p-4 hospital-container"
+          style={{ maxWidth: '800px', width: '100%' }}
+        >
+          {showHospitals && (
+            <div className="mt-4">
+              <h1 className="text-center mb-4">All Hospitals</h1>
+              <Table
+                striped
+                bordered
+                hover
+                responsive
+                className="custom-table"
+              >
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Hospital Name</th>
+                    <th>Address</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {hospitalList.map((hospitalItem, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{hospitalItem.hospitalName}</td>
+                      <td>{hospitalItem.address}</td>
+                      <td>{hospitalItem.hospitalType}</td>
+                      <td>{hospitalItem.description}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+          )}
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-          >
-            <Form.Label
-              column
-              sm={2}
-            >
-              <b>Address:</b>
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                type="text"
-                ref={address}
-                placeholder="Please enter address"
-                maxLength={40}
-                required
-              />
-            </Col>
-          </Form.Group>
+          <div className="mb-4">
+            <h1 className="text-center mb-4">Add Hospital</h1>
+            <Form onSubmit={saveHospital}>
+              <Form.Group
+                as={Row}
+                className="mb-3"
+              >
+                <Form.Label
+                  column
+                  sm={3}
+                >
+                  <b>Hospital Name:</b>
+                </Form.Label>
+                <Col sm={9}>
+                  <Form.Control
+                    type="text"
+                    ref={hospitalNameRef}
+                    placeholder="Enter hospital name"
+                    maxLength={40}
+                    required
+                  />
+                </Col>
+              </Form.Group>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-          >
-            <Form.Label
-              column
-              sm={2}
-            >
-              <b>Hospital Type:</b>
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                type="text"
-                ref={type}
-                placeholder="Please enter type"
-                maxLength={40}
-                required
-              />
-            </Col>
-          </Form.Group>
+              <Form.Group
+                as={Row}
+                className="mb-3"
+              >
+                <Form.Label
+                  column
+                  sm={3}
+                >
+                  <b>Address:</b>
+                </Form.Label>
+                <Col sm={9}>
+                  <Form.Control
+                    type="text"
+                    ref={addressRef}
+                    placeholder="Enter address"
+                    maxLength={40}
+                    required
+                  />
+                </Col>
+              </Form.Group>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-          >
-            <Form.Label
-              column
-              sm={2}
-            >
-              <b>Picture URL:</b>
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                type="text"
-                ref={picURL}
-                placeholder="Please enter picture URL"
-                maxLength={500}
-                required
-              />
-            </Col>
-          </Form.Group>
+              <Form.Group
+                as={Row}
+                className="mb-3"
+              >
+                <Form.Label
+                  column
+                  sm={3}
+                >
+                  <b>Hospital Type:</b>
+                </Form.Label>
+                <Col sm={9}>
+                  <Form.Control
+                    type="text"
+                    ref={typeRef}
+                    placeholder="Enter type"
+                    maxLength={40}
+                    required
+                  />
+                </Col>
+              </Form.Group>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-          >
-            <Form.Label
-              column
-              sm={2}
-            >
-              <b>Description:</b>
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                type="text"
-                ref={description}
-                placeholder="Please enter description of hospital"
-                maxLength={300}
-                required
-              />
-            </Col>
-          </Form.Group>
+              <Form.Group
+                as={Row}
+                className="mb-3"
+              >
+                <Form.Label
+                  column
+                  sm={3}
+                >
+                  <b>Picture URL:</b>
+                </Form.Label>
+                <Col sm={9}>
+                  <Form.Control
+                    type="text"
+                    ref={picURLRef}
+                    placeholder="Enter picture URL"
+                    maxLength={500}
+                    required
+                  />
+                </Col>
+              </Form.Group>
 
-          <Button
-            variant="primary"
-            onClick={saveHospital}
-            className="col-md-2 button-one-line"
-          >
-            Save Hospital
-          </Button>
-        </Form>
+              <Form.Group
+                as={Row}
+                className="mb-3"
+              >
+                <Form.Label
+                  column
+                  sm={3}
+                >
+                  <b>Description:</b>
+                </Form.Label>
+                <Col sm={9}>
+                  <Form.Control
+                    type="text"
+                    ref={descriptionRef}
+                    placeholder="Enter description"
+                    maxLength={300}
+                    required
+                  />
+                </Col>
+              </Form.Group>
+
+              <Row>
+                <Col className="d-flex justify-content-end">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    className="me-2 button-one-line"
+                  >
+                    Save Hospital
+                  </Button>
+                  <Button
+                    variant="primary"
+                    onClick={() => setShowHospitals(!showHospitals)}
+                    className="button-one-line"
+                  >
+                    {showHospitals ? 'Hide Hospitals' : 'Show Hospitals'}
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          </div>
+        </div>
       </Container>
-
-      <Container className="componentClass">
-        <h1>Get all Hospitals</h1>
-        <Form className="col-md-8">
-          <Button
-            variant="primary"
-            style={{ whiteSpace: 'nowrap', width: 'auto' }}
-            onClick={handleButtonClick}
-            className="col-md-2 button-one-line"
-          >
-            View All Hospitals
-          </Button>
-        </Form>
-
-        {showHospitals && (
-          <ul>
-            {hospitalList.map((hospitalItem, index) => (
-              <li key={index}>{hospitalItem.hospitalName}</li>
-            ))}
-          </ul>
-        )}
-      </Container>
-    </>
+    </div>
   );
 };
 

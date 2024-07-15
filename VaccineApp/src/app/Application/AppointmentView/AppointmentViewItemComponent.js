@@ -10,7 +10,7 @@ const AppointmentViewItem = ({
   handleReject,
 }) => {
   const accessToken = useSelector((store) => store.tokenReducer.accessToken);
-
+ 
   const dispatchToDB = useDispatch();
 
   useEffect(() => {

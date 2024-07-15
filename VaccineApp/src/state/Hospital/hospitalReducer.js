@@ -11,6 +11,12 @@ let hospitalReducer = (state = initialState, action) => {
     case actionTypes.ADD_HOSPITALS_TO_STORE:
       return { ...state, hospitalList: action.payload };
 
+    case actionTypes.ADD_HOSPITAL_TO_STORE:
+      return {
+        ...state,
+        hospitalList: [...state.hospitalList, action.payload],
+      };
+
     case actionTypes.ADD_PICURL_TO_STORE:
       return { ...state, hospitalPicURL: action.payload };
     default:
